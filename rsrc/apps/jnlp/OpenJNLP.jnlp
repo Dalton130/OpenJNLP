@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jnlp version="0.7.1" codebase="http://openjnlp.nanode.org/apps" href="OpenJNLP.jnlp">
+  <information>
+    <title>OpenJNLP</title>
+    <vendor>Nanode LLC</vendor>
+    <homepage href="http://openjnlp.nanode.org/" />
+    <icon href="openjnlp-icon.gif" />
+    <offline-allowed />
+
+    <description>Java Network Launching manager</description>
+    <description kind="tooltip">Java Net Launcher</description>
+    <description kind="short">OpenJNLP is an open-source implementation of the Java Network Launching Protocol (JNLP). It provides the ability to launch Java applications and applets from the network without the need for a web browser.</description>
+  </information>
+
+  <security>
+    <all-permissions />
+  </security>
+
+  <resources>
+    <j2se version="1.3+" />
+
+    <jar href="jars/openjnlp-app.jar" main="true" />
+    <jar href="jars/openjnlp-lib.jar" />
+    <jar href="jars/openjnlp-extra.jar" />
+  </resources>
+
+  <application-desc main-class="org.nanode.app.OpenJNLP" />
+</jnlp>

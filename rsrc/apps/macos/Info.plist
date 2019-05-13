@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>jnlp</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>jnlp.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>JNLP files</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>JNLX</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>OpenJNLP</string>
+	<key>CFBundleGetInfoString</key>
+	<string>OpenJNLP, Copyright (c) 2001, Nanode LLC</string>
+	<key>CFBundleIconFile</key>
+	<string>OpenJNLP.icns</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@app.version@</string>
+	<key>CFBundleSignature</key>
+	<string>NAoj</string>
+	<key>Java</key>
+	<dict>
+		<key>ClassPath</key>
+		<array>
+			<string>$JAVAROOT/openjnlp-app.jar</string>
+			<string>$JAVAROOT/openjnlp-lib.jar</string>
+			<string>$JAVAROOT/openjnlp-extra.jar</string>
+			<string>$JAVAROOT/jnlp.jar</string>
+		</array>
+		<key>MainClass</key>
+		<string>org.nanode.app.OpenJNLP</string>
+		<key>Properties</key>
+		<dict>
+			<key>com.apple.macos.useScreenMenuBar</key>
+			<string>true</string>
+			<key>com.apple.mrj.application.apple.menu.about.name</key>
+			<string>OpenJNLP</string>
+		</dict>
+		<key>WorkingDirectory</key>
+		<string>$APP_PACKAGE/Contents</string>
+	</dict>
+</dict>
+</plist>

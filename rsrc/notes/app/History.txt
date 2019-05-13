@@ -1,0 +1,303 @@
+OpenJNLP History
+================
+v0.7.1:
+    Minor release to address some launching issues and correct a Mac OS X user interface
+    problem.
+
+
+What's New:
+    - New Features
+      * Will now use Main-class attribute of main jar manifest if no main-class specified in
+        <application-desc> tag of JNLP file.
+
+    - Bug Fixes
+      * Properties were being parsed but not passed on to launched app; now handled correctly.
+      * Fixed problem with URLs containing certain characters like '&'.
+      * On Mac OS X the main window was opening twice in certain situations. This problem has
+        been resolved.
+
+
+ Notes on Usage:
+    - Java2 Required
+      * In order to provide a better experience for all Java users, the development of the
+        Java2 is now separate from the JDK 1.1 version. This branching means that releases
+        for each Java platform are not tied to other platforms and functionality can be
+        tailored for the best-possible implementation.
+    - Mac OS X Platform
+      * Starting with OpenJNLP 0.7, the OpenJNLP cache is in the ~/Library/Caches/OpenJNLP
+        folder. OpenJNLP will automatically migrate older caches to the new location on startup
+        if necessary.
+      * Users can now assign OpenJNLP to be the handler for JNLP documents which allows
+        double-clicking of documents and web-link launching possible. Due to known
+        problems with Mac OS X and Java, document-opening may only work properly if
+        OpenJNLP is already running.
+    - Unix Platforms
+      * OpenJNLP checks for JAVA_HOME to find the Java executable, falling back to /usr/bin/java
+        if JAVA_HOME is not set. Most unix distributions seem to use /usr/bin/java which is
+        what the OpenJNLP shell script assumes.
+    - Windows Platforms
+      * The Windows implementation requires that Java is properly installed and
+        part of the PATH when running programs. Basically, if you can invoke Java
+        directly from the run command OpenJNLP should work fine.
+
+
+Known Issues:
+    - Caching/Launching
+      * No security!
+      * <j2se> and <extension> resources are not supported.
+      * No support for proxies yet.
+      * No checking for JVM version numbers.
+      * The JNLP Service Manager and JNLP services are not implemented.
+
+    - Application
+      * No way to delete apps from cache.
+
+
+Previous Releases
+=================
+v0.7:
+    This version fixes problems that caused OpenJNLP to always reload resources into the cache
+    when launching an app. OpenJNLP now uses resources directly from cache if up to date. Added
+    support for launching JNLP Applets. OpenJNLP can now be launched as a JNLP app itself by
+    JNLP clients such as Java Web Start or even OpenJNLP.
+
+
+What's New:
+    - New Features
+      * JNLP Applets now supported.
+      * OpenJNLP can be run via Java Web Start (JNLP distribution).
+
+    - Changes
+      * OpenJNLP library (parser, launcher, cache) re-engineered to truly be embeddable in
+        apps other than OpenJNLP. Now available to developers as a separate distribution.
+      * Changed external launcher to be inside OpenJNLP cache, allowing for better cross-
+        platform behavior and self-updating of the external launcher.
+      * Simplified packaging of classes into fewer jars, making components more manageable.
+      * Now using latest version of SAX (SAX2 r2).
+      * Now using NanoXML 2.2.
+      * Improved javadoc.
+
+    - Bug Fixes
+      * Fixed downloading of resources every time an app is launched, now properly uses the
+        cached version if up-to-date.
+      * Fixed problem where resources were downloaded more than once in some cases involving
+        nativelib resources.
+      * Fixed ability to get/launch JNLP descriptors that have no href defined in the
+        <jnlp> tag.
+      * Many small error checking changes to improve handling of unexpected situations.
+      * Changed openjnlp.sh script on unix to check for JAVA_HOME to find java binary.
+      * Fixed double-line problem with messages in OpenJNLP console window.
+      * Paste now works on Mac OS X in dialog for entering JNLP URL.
+
+
+v0.6:
+    Locale- and platform-specific JNLP parsing has been added. Native library support has also
+    been added to the app launching. Improved functionality in the user interface includes a
+    console window for seeing output from launched apps. Also provided is a better info window
+    for apps in the app list.
+
+
+What's New:
+    - New Features
+      * Improved info window.
+      * Console window for viewing output of launched apps.
+      * Native library support in app launching.
+      * Locale and platform (OS and architecture) support.
+
+    - Changes
+      * Cache API has been revamped. This lays the groundwork for version-based resources.
+      * Lots of javadoc comments added in OpenJNLP library.
+
+    - Bug Fixes
+      * Minor performance increases when starting up.
+
+
+v0.5.1:
+    This release fixes some bugs from the previous version, most notably fixing updating
+    of the app list when getting a new app and corrected the parsing of JNLP files to
+    support properties. Please refer to the previous release notes for notes on usage.
+
+    - Bug Fixes
+      * When getting a new JNLP app, the app list is now updated immediately.
+      * Properties are now parsed from the JNLP file and set when a JNLP app is launched.
+      * JNLP parsing no longer fails when encountering unknown tag.
+      * Version info now shows in Mac OS X Finder.
+      * Internal changes to parsing and caching that better support the notion of
+        multiple caches.
+
+
+v0.5:
+    Major improvements have been made to caching. The cache has been overhauled and now
+    provides automatic resource updating when resources are determined to be out of date.
+    Launching has also been completely revamped resulting in a streamlined launch process.
+
+    - Notes on Usage
+      * In order to provide a better experience for all Java users, the development of the
+        Java2 is now separate from the JDK 1.1 version. This branching means that releases
+        for each Java platform are not tied to other platforms and functionality can be
+        tailored for the best-possible implementation.
+      * Mac OS X users can now assign OpenJNLP to be the handler for JNLP documents which
+        allows double-clicking of documents and web-link launching possible. Due to known
+        problems with Mac OS X and Java, document-opening may only work properly if
+        OpenJNLP is already running.
+      * The Windows implementation requires that Java is properly installed and
+        part of the PATH when running programs. Basically if you can invoke Java
+        directly from the Run command, OpenJNLP should work fine.
+      * OpenJNLP on Unix uses a shell script to find the java executable, and it
+        may need to be tweaked depending on the system it is running on. Most unix
+        distributions seem to use /usr/bin/java, which is what the OpenJNLP shell
+        script assumes.
+      * All platforms: cache converts itself to new structure if it detects an old-style
+        cache. When converted all resources are considered out of date and will be
+        downloaded when necessary. If an app fails to launch it may be necessary to
+        delete it from the cache.
+
+    - New Features
+      * Feedback! Users are now presented with activity feedback during an app launch.
+      * A launch can be canceled while in progress.
+      * Resources (such as jars) are updated when out of date. This is implemented via
+        JNLP "basic" updating using Last-Modified timestamps.
+
+    - Changes
+      * Cache layout simplified. Cache will automatically convert old-style caches.
+      * Resources now manage themselves within the cache using the new CachedResource class.
+      * Packaging is simplified. There are now two jars: openjnlp-app.jar and
+        openjnlp-lib.jar. SAX2 and NanoXML are still required.
+      * ClassLoader is now based on the Java2 java.net.ClassLoader.
+      * OpenJNLP "cache:" URL has been removed, no longer used.
+      * Descriptors (JNLP files) are now cached according to the JNLP specification. This
+        means if the jnlp tag has an href it is added to the cache, otherwise it is not.
+      * JNLP Descriptors that aren't cached can not be launched via OpenJNLP without
+        entering the URL although the resources are cached.
+      * OpenJNLP now has a registered creator code for Mac OS platforms, allowing JNLP
+        documents to be associated with the application.
+
+    - Bug Fixes
+      * Big changes have altered the bug landscape, all aspects of launching and caching
+        have been significantly modified.
+      * Process streams (stdout and stderr of externally-launched apps) are now being
+        captured and sent to the console (System.out and System.err).
+
+Known Issues:
+    - Caching/Launching
+      * No security!
+      * Properties not set when launching an application.
+      * <extension> and <nativelib> resources are not supported.
+      * No support for proxies yet.
+      * No checking for JVM version numbers.
+      * The JNLP Service Manager and JNLP services are not implemented.
+
+    - Application
+      * No way to delete apps from cache.
+      * Generic app icon is sometimes displayed instead of the app-specified icon.
+
+
+v0.4:
+    This release adds external JVM launching. A new Java virtual machine is started
+    each time the user launches an app from OpenJNLP. External JVM launching is a
+    significant improvement in behavior, especially for Mac OS X and Mac OS 9 users.
+
+    - Notes on Usage
+      * On Mac OS X, Java apps don't seem to properly get open document notification,
+        so an ugly hack has been implemented to get around this problem. Also, the
+        Dock seems to get confused at times by the multiple appearance of OpenJNLP in
+        the Dock.
+      * For Mac OS Classic, some undocumented behavior of MRJ is being used to get
+        separate JVM launching working. Essentially all of the activity takes place
+        in a hidden folder on the System disk, but it is unclear if that folder's
+        name remains constant across localized versions of Mac OS.
+      * The Windows implementation requires that Java is properly installed and
+        part of the PATH when running programs. Basically if you can invoke Java
+        directly from the Run command, OpenJNLP should work fine.
+      * OpenJNLP on Unix uses a shell script to find the java executable, and it
+        may need to be tweaked depending on the system it is running on. Most unix
+        distributions seem to use /usr/bin/java, which is what the OpenJNLP shell
+        script assumes.
+
+    - New Features
+      * Apps are launched in external virtual machines.
+
+v0.3:
+    OpenJNLP has undergone a major user-interface overhaul. With this new
+    user interface, OpenJNLP can now be considered a useful application
+    that makes it easy to launch and relaunch JNLP-based apps.
+
+    OpenJNLP has also undergone some structural changes, separating the
+    JNLP parsing/launching code from the application and GUI.
+
+    - Notes on Usage
+        * Previous OpenJNLP users should remove their existing cache
+          directory, since this version of OpenJNLP implements a
+          somewhat-improved caching structure. Anything cached by
+          previous versions of OpenJNLP will be invisible to the
+          new cache architecture and will needlessly waste disk space.
+
+    - New Features
+        * All-new user interface! Shows list of previously-parsed JNLP
+          apps and allows running by selecting from the list.
+        * SAX2-compatible XML parsing.
+        * Source code distribution and javadoc are now available.
+
+    - Changes
+        * Cache restructured to provide better layout of resources.
+        * Improved ClassLoader. It is a simpler implementation and
+          has some performance improvements.
+        * The OpenJNLP "cache:" URL format has changed.
+        * SAX2 XML parsing has been implemented. Still using NanoXML
+          as the XML parser.
+        * The OpenJNLP distribution has been split into multiple jars.
+          The JNLP processing and caching classes are in "openjnlp.jar"
+          while the OpenJNLP application is comprised of "openjnlp-app.jar"
+          and "desktop.jar".
+
+    - Bug Fixes
+        * Jar files in the cache are no longer held open by the "cache:"
+          URLStreamHandler or the ClassLoader.
+        * JNLP resource MIME-typing is handled by JNLPParser instead
+          of the GUI.
+        * Success/failure checking of HTTP access to JNLP files added.
+
+
+v0.2:
+    This is a "performance" release of OpenJNLP with many internal
+    improvements. Most notably, app execution speed is acceptable.
+
+    - Changes
+        * The wretchedly slow ClassLoader has been replaced with a
+          spiffy new ClassLoader that is way faster. 
+        * Gracefully detects missing Swing.
+    - Bug Fixes
+        * Fixed memory leak in DefaultCache.establishEntry().
+        * Fixed cache URL handler, all resources should now be loaded
+          properly from jars.
+        * getResourceAsStream() now works properly.
+        * Clarified security warning message.
+
+
+v0.1:
+    This is a major release, it adds network launching of Java apps.
+
+    - New Features
+        * Now launches parsed JNLP apps in same JVM.
+        * Caches JNLP apps and resources locally.
+    - Changes
+        * JNLP file and icon are now looked for in cache before network.
+        * Detail window now lets users launch app.
+        * Now performs permissive parsing, will attempt to parse any
+          URL ending with .jnlp extension.
+    - Bug Fixes
+        * Fixed background color of debug info on Windows.
+
+
+v0.0.1:
+    - New Features
+        * Can now view JNLP source of retrieved file.
+    - Changes
+        * Extensive enhancement of Detail window.
+
+
+v0.0:
+    - New Features
+        * Initial release.
+        * Can enter URL and view JNLP information.
+        * Can select local JNLP file using file chooser.
