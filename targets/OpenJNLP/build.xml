@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE project [
+  <!ENTITY common SYSTEM "../common.xml">
+]>
+
+<project basedir="../.." default="usage">
+  <property file="targets/environment.properties" />
+  <property file="${target.dir}/OpenJNLP/product.properties" />
+
+  <!--
+    OpenJNLP app jars: openjnlp-app.jar openjnlp-lib.jar
+      additional jars: jnlp.jar sax.jar nanoxml-2.2.jar nanoxml-sax-2.2.jar
+   -->
+
+  <!-- classpath needed to compile app -->
+  <path id="product.classpath">
+    <pathelement path="${java.class.path}" />
+    <pathelement path="${build.jars.dir}/${product.lib.jar}" />
+  </path>
+
+  <!-- classpath needed to compile lib -->
+  <path id="library.classpath">
+    <pathelement path="${java.class.path}" />
+    <pathelement location="${lib.dir}/jnlp.jar" />
+    <pathelement location="${lib.dir}/sax.jar" />
+  </path>
+
+  <!-- which files to compile into app jar -->
+  <patternset id="openjnlp-app.jar.files">
+    <includesfile name="${target.dir}/${product.name}/${product.app.jar}.txt" />
+    <exclude name="**/.DS_Store" />
+  </patternset>
+
+  <!-- which files to compile into lib jar -->
+  <patternset id="openjnlp-lib.jar.files">
+    <includesfile name="${target.dir}/${product.name}/${product.lib.jar}.txt" />
+    <exclude name="**/.DS_Store" />
+  </patternset>
+
+  <!-- all jars needed for app -->
+  <fileset dir="." id="product.jar.files">
+    <include name="${build.jars.dir}/${product.app.jar}" />
+    <include name="${build.jars.dir}/${product.lib.jar}" />
+    <include name="${build.jars.dir}/openjnlp-extra.jar" />
+    <include name="${lib.dir}/jnlp.jar" />
+  </fileset>
+
+  <!-- app doc files -->
+  <fileset dir="${rsrc.notes.dir}/app" id="product.doc.files">
+    <include name="History.txt" />
+    <include name="License.txt" />
+    <include name="ReadMe.txt" />
+  </fileset>
+
+  <!-- macosx rsrc files -->
+  <fileset dir="${rsrc.apps.dir}/macos" id="product.rsrc.files">
+    <include name="${product.name}.icns" />
+    <include name="jnlp.icns" />
+  </fileset>
+
+  <!-- unix bin files -->
+  <fileset dir="${rsrc.apps.dir}/unix" id="product.bin.files">
+    <include name="openjnlp.sh" />
+  </fileset>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- Initialize environment. Must be called by all targets -->
+  <target name="init">
+    <tstamp />
+
+    <!-- stuff for compiling -->
+    <property name="product.classes.dir" value="${build.classes.dir}/${product.name}/openjnlp-app" />
+    <property name="library.classes.dir" value="${build.classes.dir}/${product.name}/openjnlp-lib" />
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- display usage information -->
+  <target name="usage" depends="init">
+    <echo>
+      ${product.name} build file
+      ------------------------------------------------------
+
+      Available targets are:
+        clean    --> remove all pieces in build directory
+        compile  --> compile source to build directory and makes jars
+        build    --> build apps for all supported platforms
+        library  --> creates library distribution
+        package  --> package for distribution on all supported platforms
+
+        javadoc  --> generate javadoc in build directory
+        source   --> export source from CVS
+    </echo>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- clean out all build pieces -->
+  <target name="clean" depends="init">
+    <!-- delete classes -->
+    <delete dir="${build.classes.dir}/${product.name}" />
+
+    <!-- delete jars -->
+    <delete file="${build.jars.dir}/${product.lib.jar}" />
+    <delete file="${build.jars.dir}/${product.app.jar}" />
+    <delete file="${build.jars.dir}/openjnlp-extra.jar" />
+
+    <!-- delete apps -->
+    <delete includeEmptyDirs="true">
+      <fileset dir="${build.apps.jnlp.dir}" includes="${product.name}*/**" />
+      <fileset dir="${build.apps.macos.dir}" includes="${product.name}*/**" />
+      <fileset dir="${build.apps.unix.dir}" includes="${product.name}*/**" />
+      <fileset dir="${build.apps.windows.dir}" includes="${product.name}*/**" />
+    </delete>
+
+    <!-- delete packages -->
+    <delete>
+      <fileset dir="${build.pkg.dir}" includes="**/${product.name}*" />
+    </delete>
+
+    <!-- delete javadoc -->
+    <delete includeEmptyDirs="true">
+      <fileset dir="${build.javadoc.dir}" includes="**/${product.name}*/**" />
+    </delete>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- compile java source to jars, including any resources -->
+  <target name="compile" depends="init">
+    <antcall target="compile-jar">
+      <param name="compile.classes.dir" value="${library.classes.dir}" />
+      <param name="compile.classpath.refid" value="library.classpath" />
+
+      <param name="compile.jar.dir" value="${build.jars.dir}" />
+      <param name="compile.jar" value="${product.lib.jar}" />
+
+      <param name="compile.files.refid" value="openjnlp-lib.jar.files" />
+    </antcall>
+
+    <antcall target="compile-jar">
+      <param name="compile.classes.dir" value="${product.classes.dir}" />
+      <param name="compile.classpath.refid" value="product.classpath" />
+
+      <param name="compile.jar.dir" value="${build.jars.dir}" />
+      <param name="compile.jar" value="${product.app.jar}" />
+
+      <param name="compile.files.refid" value="openjnlp-app.jar.files" />
+    </antcall>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- build for each supported platform -->
+  <target name="build" depends="compile">
+    <!-- make combined openjnlp-extra.jar which is used by the openjnlp launcher -->
+    <jlink outfile="${build.jars.dir}/openjnlp-extra.jar" compress="true">
+      <mergefiles>
+        <pathelement path="${lib.dir}/sax.jar" />
+        <pathelement path="${lib.dir}/nanoxml-2.2.jar" />
+        <pathelement path="${lib.dir}/nanoxml-sax-2.2.jar" />
+      </mergefiles>
+    </jlink>
+
+    <!-- jnlp -->
+    <available property="make.jnlp" file="targets/nanodekeystore" type="file" />
+    <antcall target="jnlp" />
+
+    <!-- macosx -->
+    <antcall target="build-macosx">
+      <param name="macosx.app.dir" value="${build.apps.macos.dir}/${product.name}-${product.version}" />
+
+      <param name="macosx.app.name" value="${product.name}.app" />
+      <param name="macosx.app.appfile" value="${rsrc.apps.dir}/macos/${product.name}" />
+      <param name="macosx.app.info" value="${rsrc.apps.dir}/macos/Info.plist" />
+      <param name="macosx.pkg.info" value="${rsrc.apps.dir}/macos/PkgInfo" />
+
+      <param name="macosx.doc.files.refid" value="product.doc.files" />
+      <param name="macosx.jar.files.refid" value="product.jar.files" />
+      <param name="macosx.rsrc.files.refid" value="product.rsrc.files" />
+    </antcall>
+
+    <!-- unix -->
+    <antcall target="build-unix">
+      <param name="unix.app.dir" value="${build.apps.unix.dir}/${product.name}-${product.version}" />
+
+      <param name="unix.bin.files.refid" value="product.bin.files" />
+      <param name="unix.doc.files.refid" value="product.doc.files" />
+      <param name="unix.lib.files.refid" value="product.jar.files" />
+    </antcall>
+
+    <!-- windows -->
+    <antcall target="build-windows">
+      <param name="win.app.dir" value="${build.apps.windows.dir}/${product.name}-${product.version}" />
+
+      <param name="win.app.binfile" value="${rsrc.apps.dir}/windows/${product.name}.bat" />
+      <param name="win.app.icon" value="${rsrc.apps.dir}/windows/${product.name}.ico" />
+
+      <param name="win.doc.files.refid" value="product.doc.files" />
+      <param name="win.lib.files.refid" value="product.jar.files" />
+    </antcall>
+  </target>
+
+  <!-- subbuild target for doing jnlp, only if property is true -->
+  <target name="jnlp" if="make.jnlp">
+    <antcall target="build-jnlp">
+      <param name="jnlp.app.dir" value="${build.apps.jnlp.dir}/${product.name}-${product.version}" />
+
+      <param name="jnlp.app.jnlpfile" value="${rsrc.apps.dir}/jnlp/${product.name}.jnlp" />
+      <param name="jnlp.app.icon" value="${rsrc.apps.dir}/jnlp/openjnlp-icon.gif" />
+
+      <param name="jnlp.jar.files.refid" value="product.jar.files" />
+    </antcall>
+    
+    <signjar jar="${build.apps.jnlp.dir}/${product.name}-${product.version}/jars/openjnlp-app.jar" alias="openjnlp" keystore="targets/nanodekeystore" storepass="nanode" />
+    <signjar jar="${build.apps.jnlp.dir}/${product.name}-${product.version}/jars/openjnlp-lib.jar" alias="openjnlp" keystore="targets/nanodekeystore" storepass="nanode" />
+    <signjar jar="${build.apps.jnlp.dir}/${product.name}-${product.version}/jars/openjnlp-extra.jar" alias="openjnlp" keystore="targets/nanodekeystore" storepass="nanode" />
+    <signjar jar="${build.apps.jnlp.dir}/${product.name}-${product.version}/jars/jnlp.jar" alias="openjnlp" keystore="targets/nanodekeystore" storepass="nanode" />
+  </target>
+  
+  <!-- create library distribution -->
+  <target name="library" depends="compile,javadoc">
+    <property name="build.lib.dir" value="${build.dir}/library/${product.name}-lib-${product.version}" />
+
+    <mkdir dir="${build.lib.dir}/jars" />
+
+    <copy todir="${build.lib.dir}/jars">
+      <fileset dir="${build.jars.dir}">
+        <include name="${product.lib.jar}" />
+        <include name="openjnlp-extra.jar" />
+      </fileset>
+    </copy>
+
+    <copy todir="${build.lib.dir}" flatten="yes">
+      <fileset dir=".">
+        <include name="${build.pkg.dir}/${product.name}-lib-javadoc.zip" />
+        <include name="${rsrc.notes.dir}/lib/License.txt" />
+        <include name="${rsrc.notes.dir}/lib/ReadMe.txt" />
+        <include name="${rsrc.notes.dir}/lib/Using.txt" />
+      </fileset>
+    </copy>
+
+    <!-- create zip of library -->
+    <zip zipfile="${build.pkg.dir}/${product.name}-lib-${product.version}.zip">
+      <zipfileset dir="${build.lib.dir}" prefix="${product.name}-lib-${product.version}" />
+    </zip>
+  </target>
+
+  <!-- package for each supported platform -->
+  <target name="package" depends="build,library">
+    <mkdir dir="${build.pkg.dir}" />
+    <mkdir dir="${build.apps.jnlp.dir}/${product.name}-${product.version}" />
+      
+    <!-- jnlp zip -->
+    <zip zipfile="${build.pkg.dir}/${product.name}-${product.version}-jnlp.zip">
+      <zipfileset prefix="" dir="${build.apps.jnlp.dir}/${product.name}-${product.version}" />
+    </zip>
+
+    <!-- disk image for macosx -->
+    <exec dir="${build.pkg.dir}" executable="../../${rsrc.apps.dir}/macos/mkdmg.sh" os="Mac OS X">
+      <arg value="${product.name}" />
+      <arg value="${product.version}" />
+      <arg value="../../${build.apps.macos.dir}/${product.name}-${product.version}" />
+    </exec>
+
+    <gzip src="${build.pkg.dir}/${product.name}-${product.version}.dmg"
+          zipfile="${build.pkg.dir}/${product.name}-${product.version}.dmg.gz" />
+
+    <!-- unix: make tar and gzipped tar -->
+    <property name="pkg.tar.file" value="${build.pkg.dir}/${product.name}-${product.version}.tar" />
+    <tar longfile="gnu" tarfile="${pkg.tar.file}" basedir="${build.apps.unix.dir}" />
+    <gzip src="${pkg.tar.file}" zipfile="${pkg.tar.file}.gz" />
+
+    <!-- windows zip -->
+    <zip zipfile="${build.pkg.dir}/${product.name}-${product.version}.zip" basedir="${build.apps.windows.dir}" />
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- generate javadoc -->
+  <target name="javadoc" depends="init">
+    <mkdir dir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-lib" />
+    <mkdir dir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-app" />
+
+    <!-- javadoc for lib -->
+    <echo message="Generating javadoc for OpenJNLP library" />
+    <javadoc packagenames="org.nanode.jnlp.*,org.nanode.launcher.*"
+             classpathref="library.classpath"
+             sourcepath="${src.dir}"
+             destdir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-lib"
+             author="true"
+             version="true"
+             use="true"
+             access="protected"
+             doctitle="${javadoc.lib.title}"
+             windowtitle="${javadoc.lib.title}"
+             bottom="${javadoc.copyright}">
+      <group title="JNLP Packages" packages="org.nanode.jnlp*" />
+      <group title="Launcher Packages" packages="org.nanode.launcher*" />
+      <link offline="true" href="http://java.sun.com/products/jdk/1.3/docs/api/" packagelistLoc="${rsrc.javadoc.dir}/sun" />
+    </javadoc>
+
+    <!-- javadoc for app -->
+    <echo message="Generating javadoc for OpenJNLP application" />
+    <javadoc packagenames="org.nanode.app,org.nanode.app.openjnlp.*"
+             classpathref="product.classpath"
+             sourcepath="${src.dir}"
+             destdir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-app"
+             author="true"
+             version="true"
+             use="true"
+             access="protected"
+             doctitle="${javadoc.app.title}"
+             windowtitle="${javadoc.app.title}"
+             bottom="${javadoc.copyright}">
+      <group title="OpenJNLP Application Classes" packages="org.nanode.app,org.nanode.app.openjnlp*" />
+      <link offline="true" href="http://java.sun.com/products/jdk/1.3/docs/api/" packagelistLoc="${rsrc.javadoc.dir}/sun" />
+      <link offline="true" href="http://openjnlp.nanode.org/javadoc/openjnlp/openjnlp-lib/" packagelistLoc="${build.javadoc.dir}/${product.name}-lib" />
+      <link offline="true" href="http://developer.apple.com/techpubs/macosx/Java/Reference/Java/" packagelistLoc="${rsrc.javadoc.dir}/apple" />
+    </javadoc>
+
+    <!-- create zips of of each javadoc -->
+    <mkdir dir="${build.pkg.dir}" />
+
+    <zip zipfile="${build.pkg.dir}/${product.name}-app-javadoc.zip" basedir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-app" />
+    <zip zipfile="${build.pkg.dir}/${product.name}-lib-javadoc.zip" basedir="${build.javadoc.dir}/${product.name}-${product.version}/${product.name}-lib" />
+ </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- generate source archive -->
+  <target name="source" depends="init">
+    <property name="pkg.src.dir" value="${build.dir}/source" />
+    <mkdir dir="${pkg.src.dir}" />
+    <mkdir dir="${build.pkg.dir}" />
+
+    <delete dir="${pkg.src.dir}/${app.name}-src-${cvs.version}" quiet="true" />
+
+    <cvspass cvsroot=":pserver:anonymous@cvs.openjnlp.sourceforge.net:/cvsroot/openjnlp" password="" />
+    <cvs dest="${pkg.src.dir}" cvsroot=":pserver:anonymous@cvs.openjnlp.sourceforge.net:/cvsroot/openjnlp"
+         command="export -d ${app.name}-src-${cvs.version} -r ${cvs.version}" package="devel" />
+
+    <zip zipfile="${build.pkg.dir}/${app.name}-src-${cvs.version}.zip">
+      <zipfileset dir="${pkg.src.dir}/${app.name}-src-${cvs.version}" prefix="${app.name}-src-${cvs.version}" />
+    </zip>
+  </target>
+
+  <!-- include externally-defined targets -->
+  &common;
+</project>

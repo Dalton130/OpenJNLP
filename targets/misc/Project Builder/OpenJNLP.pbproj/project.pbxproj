@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		F51F27570257A14301000165 = {
+			isa = PBXFileReference;
+			path = TableLayout.java;
+			refType = 4;
+		};
+		F51F27580257A14301000165 = {
+			isa = PBXFileReference;
+			path = TableLayoutConstraints.java;
+			refType = 4;
+		};
+		F52B85270292EE0901000165 = {
+			isa = PBXFileReference;
+			path = FileCachedResource.java;
+			refType = 4;
+		};
+		F5440FDD0280E35E01000165 = {
+			isa = PBXFileReference;
+			path = AppletRunner.java;
+			refType = 4;
+		};
+//F50
+//F51
+//F52
+//F53
+//F54
+//F70
+//F71
+//F72
+//F73
+//F74
+		F715D65F01A8257801000163 = {
+			isa = PBXFileReference;
+			path = CachedResource.java;
+			refType = 4;
+		};
+		F71801B201E9420001000163 = {
+			children = (
+				F71801B301E9420001000163,
+			);
+			isa = PBXGroup;
+			path = edu;
+			refType = 4;
+		};
+		F71801B301E9420001000163 = {
+			children = (
+				F71801B401E9420001000163,
+			);
+			isa = PBXGroup;
+			path = stanford;
+			refType = 4;
+		};
+		F71801B401E9420001000163 = {
+			children = (
+				F71801B501E9420001000163,
+			);
+			isa = PBXGroup;
+			path = ejalbert;
+			refType = 4;
+		};
+		F71801B501E9420001000163 = {
+			isa = PBXFileReference;
+			path = BrowserLauncher.java;
+			refType = 4;
+		};
+		F71A3B5301B6FF8501000163 = {
+			isa = PBXFileReference;
+			path = AppHandler.java;
+			refType = 4;
+		};
+		F71A3B5401B7000C01000163 = {
+			isa = PBXFileReference;
+			path = MacOSAppHandler.java;
+			refType = 4;
+		};
+		F71A3B5501B70E1001000163 = {
+			isa = PBXFileReference;
+			path = DefaultAppHandler.java;
+			refType = 4;
+		};
+		F71B14E801A49DED01000163 = {
+			isa = PBXFileReference;
+			path = IconFactory.java;
+			refType = 4;
+		};
+		F71E42BF01A627C701000163 = {
+			isa = PBXFileReference;
+			path = IconLabel.java;
+			refType = 4;
+		};
+		F71EE1C301A32C2601000163 = {
+			isa = PBXFileReference;
+			path = LaunchDialog.java;
+			refType = 4;
+		};
+		F72FB879023C874901000163 = {
+			children = (
+				F72FB87A023C874901000163,
+				F72FB888023C889901000163,
+				F72FB87B023C874901000163,
+				F72FB87C023C874901000163,
+			);
+			isa = PBXGroup;
+			name = Targets;
+			path = ../..;
+			refType = 2;
+		};
+		F72FB87A023C874901000163 = {
+			isa = PBXFileReference;
+			path = build.xml;
+			refType = 4;
+		};
+		F72FB87B023C874901000163 = {
+			isa = PBXFileReference;
+			path = environment.properties;
+			refType = 4;
+		};
+		F72FB87C023C874901000163 = {
+			children = (
+				F72FB87D023C874901000163,
+				F72FB87E023C874901000163,
+				F72FB87F023C874901000163,
+				F72FB880023C874901000163,
+			);
+			isa = PBXGroup;
+			path = OpenJNLP;
+			refType = 4;
+		};
+		F72FB87D023C874901000163 = {
+			isa = PBXFileReference;
+			path = build.xml;
+			refType = 4;
+		};
+		F72FB87E023C874901000163 = {
+			isa = PBXFileReference;
+			path = product.properties;
+			refType = 4;
+		};
+		F72FB87F023C874901000163 = {
+			isa = PBXFileReference;
+			path = "openjnlp-app.jar.txt";
+			refType = 4;
+		};
+		F72FB880023C874901000163 = {
+			isa = PBXFileReference;
+			path = "openjnlp-lib.jar.txt";
+			refType = 4;
+		};
+		F72FB888023C889901000163 = {
+			isa = PBXFileReference;
+			path = common.xml;
+			refType = 4;
+		};
+		F73644E501F7CFCB01000163 = {
+			isa = PBXFileReference;
+			path = NativelibReference.java;
+			refType = 4;
+		};
+		F782C827018DD45101000165 = {
+			buildStyles = (
+				F782C829018DD45101000165,
+				F782C82A018DD45101000165,
+			);
+			isa = PBXProject;
+			mainGroup = F782C828018DD45101000165;
+			projectDirPath = "";
+			targets = (
+				F782C82C018DDCA001000165,
+			);
+		};
+		F782C828018DD45101000165 = {
+			children = (
+				F782C82D018DDD1601000165,
+				F72FB879023C874901000163,
+			);
+			isa = PBXGroup;
+			refType = 4;
+		};
+		F782C829018DD45101000165 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		F782C82A018DD45101000165 = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+		F782C82C018DDCA001000165 = {
+			buildArgumentsString = "-emacs build";
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "OpenJNLP\n";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /usr/local/bin/ant;
+			buildWorkingDirectory = ../../OpenJNLP;
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = "OpenJNLP\n";
+			productName = "OpenJNLP\n";
+			settingsToExpand = 6;
+			settingsToPassInEnvironment = 1;
+			settingsToPassOnCommandLine = 280;
+			shouldUseHeadermap = 0;
+		};
+		F782C82D018DDD1601000165 = {
+			children = (
+				F71801B201E9420001000163,
+				F782C82E018DDD1601000165,
+			);
+			isa = PBXGroup;
+			name = Source;
+			path = ../../../src;
+			refType = 2;
+		};
+		F782C82E018DDD1601000165 = {
+			children = (
+				F782C82F018DDD1601000165,
+			);
+			isa = PBXGroup;
+			path = org;
+			refType = 4;
+		};
+		F782C82F018DDD1601000165 = {
+			children = (
+				F782C830018DDD1601000165,
+				F782C840018DDD1601000165,
+				F782C848018DDD1601000165,
+			);
+			isa = PBXGroup;
+			path = nanode;
+			refType = 4;
+		};
+		F782C830018DDD1601000165 = {
+			children = (
+				F782C83F018DDD1601000165,
+				F782C831018DDD1601000165,
+			);
+			isa = PBXGroup;
+			path = app;
+			refType = 4;
+		};
+		F782C831018DDD1601000165 = {
+			children = (
+				F782C832018DDD1601000165,
+				F71A3B5301B6FF8501000163,
+				F71A3B5501B70E1001000163,
+				F71A3B5401B7000C01000163,
+			);
+			isa = PBXGroup;
+			path = openjnlp;
+			refType = 4;
+		};
+		F782C832018DDD1601000165 = {
+			children = (
+				F782C833018DDD1601000165,
+				F782C834018DDD1601000165,
+				F782C835018DDD1601000165,
+				F7C7ADCA01D7E79201F8942D,
+				F7FD720801D9826801948C24,
+				F782C836018DDD1601000165,
+				F782C837018DDD1601000165,
+				F7C7ADCB01D7EAAD01F8942D,
+				F782C838018DDD1601000165,
+				F782C839018DDD1601000165,
+				F71B14E801A49DED01000163,
+				F71E42BF01A627C701000163,
+				F71EE1C301A32C2601000163,
+				F782C83A018DDD1601000165,
+				F7FDDFF501D657C50110731E,
+				F782C83B018DDD1601000165,
+				F782C83C018DDD1601000165,
+				F51F27570257A14301000165,
+				F51F27580257A14301000165,
+			);
+			isa = PBXGroup;
+			path = desktop;
+			refType = 4;
+		};
+		F782C833018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = AboutDialog.java;
+			refType = 4;
+		};
+		F782C834018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = ActionCommands.java;
+			refType = 4;
+		};
+		F782C835018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = AppListModel.java;
+			refType = 4;
+		};
+		F782C836018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = DetailFrame.java;
+			refType = 4;
+		};
+		F782C837018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = DetailPane.java;
+			refType = 4;
+		};
+		F782C838018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = GetDialog.java;
+			refType = 4;
+		};
+		F782C839018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = Gooey.java;
+			refType = 4;
+		};
+		F782C83A018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = MasterFrame.java;
+			refType = 4;
+		};
+		F782C83B018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = NoSwingFrame.java;
+			refType = 4;
+		};
+		F782C83C018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = SwingWorker.java;
+			refType = 4;
+		};
+		F782C83F018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = OpenJNLP.java;
+			refType = 4;
+		};
+		F782C840018DDD1601000165 = {
+			children = (
+				F782C841018DDD1601000165,
+				F782C842018DDD1601000165,
+				F782C843018DDD1601000165,
+				F782C844018DDD1601000165,
+				F782C845018DDD1601000165,
+				F782C846018DDD1601000165,
+				F782C847018DDD1601000165,
+			);
+			isa = PBXGroup;
+			path = jnlp;
+			refType = 4;
+		};
+		F782C841018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = BasicService.java;
+			refType = 4;
+		};
+		F782C842018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = DownloadService.java;
+			refType = 4;
+		};
+		F782C843018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = ExtensionInstallerService.java;
+			refType = 4;
+		};
+		F782C844018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = JNLPContentHandler.java;
+			refType = 4;
+		};
+		F782C845018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = JNLPParser.java;
+			refType = 4;
+		};
+		F782C846018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = JNLPSpecification.java;
+			refType = 4;
+		};
+		F782C847018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = ServiceManagerStub.java;
+			refType = 4;
+		};
+		F782C848018DDD1601000165 = {
+			children = (
+				F7A19E0801B7564301000163,
+				F5440FDD0280E35E01000165,
+				F782C849018DDD1601000165,
+				F782C856018DDD1701000165,
+				F782C857018DDD1701000165,
+				F782C858018DDD1701000165,
+				F782C859018DDD1701000165,
+				F782C85A018DDD1701000165,
+				F782C85B018DDD1701000165,
+				F73644E501F7CFCB01000163,
+				F782C85C018DDD1701000165,
+				F782C85D018DDD1701000165,
+				F7B80F1101DEB93E01000163,
+				F782C84A018DDD1601000165,
+			);
+			isa = PBXGroup;
+			path = launcher;
+			refType = 4;
+		};
+		F782C849018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = ApplicationDescriptor.java;
+			refType = 4;
+		};
+		F782C84A018DDD1601000165 = {
+			children = (
+				F782C84B018DDD1601000165,
+				F782C84C018DDD1601000165,
+				F782C84D018DDD1601000165,
+				F782C84E018DDD1601000165,
+				F782C84F018DDD1601000165,
+				F782C850018DDD1601000165,
+				F715D65F01A8257801000163,
+				F782C852018DDD1601000165,
+				F782C853018DDD1601000165,
+				F782C854018DDD1701000165,
+				F52B85270292EE0901000165,
+			);
+			isa = PBXGroup;
+			path = cache;
+			refType = 4;
+		};
+		F782C84B018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = Cache.java;
+			refType = 4;
+		};
+		F782C84C018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = CacheEntry.java;
+			refType = 4;
+		};
+		F782C84D018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = CacheError.java;
+			refType = 4;
+		};
+		F782C84E018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = CacheEvent.java;
+			refType = 4;
+		};
+		F782C84F018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = CacheException.java;
+			refType = 4;
+		};
+		F782C850018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = CacheListener.java;
+			refType = 4;
+		};
+		F782C852018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = FileCache.java;
+			refType = 4;
+		};
+		F782C853018DDD1601000165 = {
+			isa = PBXFileReference;
+			path = FileCacheClassLoader.java;
+			refType = 4;
+		};
+		F782C854018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = FileCacheEntry.java;
+			refType = 4;
+		};
+		F782C856018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Descriptor.java;
+			refType = 4;
+		};
+		F782C857018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = ExtensionDescriptor.java;
+			refType = 4;
+		};
+		F782C858018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Gestalt.java;
+			refType = 4;
+		};
+		F782C859018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Information.java;
+			refType = 4;
+		};
+		F782C85A018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Launcher.java;
+			refType = 4;
+		};
+		F782C85B018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = LauncherParser.java;
+			refType = 4;
+		};
+		F782C85C018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Reference.java;
+			refType = 4;
+		};
+		F782C85D018DDD1701000165 = {
+			isa = PBXFileReference;
+			path = Resources.java;
+			refType = 4;
+		};
+		F7A19E0801B7564301000163 = {
+			isa = PBXFileReference;
+			path = AppContext.java;
+			refType = 4;
+		};
+		F7B80F1101DEB93E01000163 = {
+			isa = PBXFileReference;
+			path = Version.java;
+			refType = 4;
+		};
+		F7C7ADCA01D7E79201F8942D = {
+			isa = PBXFileReference;
+			path = CacheEntryCellRenderer.java;
+			refType = 4;
+		};
+		F7C7ADCB01D7EAAD01F8942D = {
+			isa = PBXFileReference;
+			path = EdgeBorder.java;
+			refType = 4;
+		};
+		F7FD720801D9826801948C24 = {
+			isa = PBXFileReference;
+			path = Console.java;
+			refType = 4;
+		};
+		F7FDDFF501D657C50110731E = {
+			isa = PBXFileReference;
+			path = MenuFactory.java;
+			refType = 4;
+		};
+	};
+	rootObject = F782C827018DD45101000165;
+}

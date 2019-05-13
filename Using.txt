@@ -1,0 +1,49 @@
+OpenJNLP Library Overview
+-------------------------
+
+The OpenJNLP library is a fully-functional JNLP caching launcher, suitable for embedding in other applications or running directly. It is open source software released under the Mozilla Public License 1.1 (MPL 1.1). Please see the ReadMe.txt file for more information.
+
+
+How To Launch with the OpenJNLP Library
+---------------------------------------
+
+In the distribution directory, a simple Java invocation can run it:
+
+    java -Djava.ext.dirs=jars org.nanode.jnlp.JNLPParser <someurl>
+
+Where <someurl> is a URL to a JNLP descriptor file. Instead of <someurl> the command line option "-help" will display a brief help message.
+
+(Note: the magical "-Djava.ext.dirs=jars" System property instructs the JVM to add all jars in the specified directory to the classpath.)
+
+
+Embedding OpenJNLP into a Project
+---------------------------------
+
+The OpenJNLP library contains a launching and caching framework that is abstracted from any specific descriptor technology. It also provides a JNLP-specific parsing framework that converts JNLP descriptors into launchable objects.
+
+The OpenJNLP launcher provides a self-maintaining cache and the launching of an app in a separate JVM that works on any platform.
+
+To utilize the JNLP-specific processing everything needed is in the org.nanode.jnlp.JNLPParser class. The simplest way is to pass one or more JNLP URLs to one of the forms of the launchJNLP methods. Please see the javadoc for org.nanode.jnlp.JNLPParser for details, which is part of this distribution.
+
+To get the default cache to pass into the launchJNLP methods, just use org.nanode.launcher.cache.Cache.getDefaultCache(). Simplified launchJNLP methods will be provided in future versions.
+
+
+Notes on Launching
+------------------
+
+The OpenJNLP library does not utilize any javax.jnlp.* classes during parsing, but instead only during the launch phase. If you do not have Java 1.4 or newer or jnlp.jar in your classpath you will need to get it from <http://java.sun.com/products/javawebstart/developers>. The jnlp.jar file is part of the JNLP Developer's Pack. Once you have obtained jnlp.jar simply add it to your classpath.
+
+The OpenJNLP external launcher updates itself in the OpenJNLP cache. The update check is done the first time external launching is invoked in the current JVM. Subsequent external launches in the same JVM will not do update checks.
+
+If internal launching is chosen, this will not use the launcher in the cache but whatever is currently running in the current JVM. Apps that run in a shared JVM can interfere with each other by changing System properties or switching the Swing look & feel or any other non instance-related activity that is possible within the Java APIs. No partitioning is done between OpenJNLP-launched apps in a shared JVM except to run each app in its own thread group.
+
+Beware! Any app that calls System.exit() will shut down the entire JVM which will cause abrupt termination of any other apps running in the shared JVM.
+
+
+OpenJNLP Library Components
+---------------------------
+
+The OpenJNLP library consists of two jars: openjnlp-lib.jar and openjnlp-extra.jar. The lib jar contains all of the OpenJNLP classes. The extra jar contains classes from third-party sources that OpenJNLP relies on. Currently this contaiins the SAX2 parser classes from <http://sax.sourceforge.net> as well as the NanoXML XML parser from <http://nanoxml.sourceforge.net>.
+
+The OpenJNLP library also uses the JNLP classes from Sun defined in jnlp.jar, or part of Java 1.4 and later.
+

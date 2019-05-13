@@ -1,0 +1,3 @@
+lib/launcher.properties
+org/nanode/jnlp/**
+org/nanode/launcher/**

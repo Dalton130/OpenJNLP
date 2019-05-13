@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- this consists of ant xml targets that can be called from build.xml files -->
+
+<!-- =================================================================
+     ================================================================= -->
+<!-- compile jar rule -->
+<!-- arguments:
+        compile.classes.dir:      directory for classes to be compiled into
+        compile.jar.dir:          directory for resulting jar
+        compile.files.refid:      reference to files to compile
+        compile.classpath.refid:  reference to classpath to use when compiling
+        compile.jar:              name of jar
+-->
+<target name="compile-jar">
+  <mkdir dir="${compile.classes.dir}" />
+  <mkdir dir="${compile.jar.dir}" />
+
+  <!-- compile java files from source dir to classes dir -->
+  <javac srcdir="${src.dir}" destdir="${compile.classes.dir}"
+         debug="${debug}" deprecation="${deprecation}" optimize="${optimize}">
+    <patternset refid="${compile.files.refid}" />
+    <classpath refid="${compile.classpath.refid}" />
+  </javac>
+
+  <!-- copy non-java files from resources dir to classes dir -->
+  <copy todir="${compile.classes.dir}">
+    <fileset dir="${rsrc.jar.dir}">
+      <patternset refid="${compile.files.refid}" />
+    </fileset>
+  </copy>
+
+  <!-- generate jar from classes dir -->
+  <jar jarfile="${compile.jar.dir}/${compile.jar}">
+    <fileset dir="${compile.classes.dir}">
+      <patternset refid="${compile.files.refid}" />
+    </fileset>
+  </jar>
+</target>
+
+
+<!-- =================================================================
+     ================================================================= -->
+<!-- build jnlp rule -->
+<!-- arguments:
+       jnlp.app.dir:          directory for resulting jnlp app
+       jnlp.jar.files.refid:  reference to jar files to be added (will be flattened)
+       jnlp.app.jnlpfile:     jnlp file for app
+       jnlp.app.icon:         icon file for app
+  -->
+<target name="build-jnlp">
+  <mkdir dir="${jnlp.app.dir}" />
+  <mkdir dir="${jnlp.app.dir}/jars" />
+
+  <!-- copy jars into directory -->
+  <copy flatten="yes" todir="${jnlp.app.dir}/jars">
+    <fileset refid="${jnlp.jar.files.refid}" />
+  </copy>
+
+  <!-- copy jnlp file and icon into directory -->
+  <copy todir="${jnlp.app.dir}" file="${jnlp.app.jnlpfile}" />
+  <copy todir="${jnlp.app.dir}" file="${jnlp.app.icon}" />
+</target>
+
+
+<!-- =================================================================
+     ================================================================= -->
+<!-- build macosx rule -->
+<!-- arguments:
+       macosx.app.name:			 name of app (with ".app" extension")
+       macosx.app.dir:           directory for resulting macosx app
+       macosx.doc.files.refid:   reference to doc files to be added (will be flattened)
+       macosx.jar.files.refid:   reference to jar files to be added (will be flattened)
+       macosx.rsrc.files.refid:  reference to resource files to be added (will be flattened)
+       macosx.app.appfile:       executable file for app
+       macosx.app.info:          Info.plist file for app
+       macosx.pkg.info:          PkgInfo file for app
+  -->
+<target name="build-macosx">
+  <property name="macosx.contents" value="${macosx.app.dir}/${macosx.app.name}/Contents" />
+
+  <mkdir dir="${macosx.contents}/MacOS" />
+  <mkdir dir="${macosx.contents}/Resources/Java" />
+
+  <!-- copy jar files into java directory -->
+  <copy flatten="yes" todir="${macosx.contents}/Resources/Java">
+    <fileset refid="${macosx.jar.files.refid}" />
+  </copy>
+
+  <!-- copy resources into resource directory -->
+  <copy flatten="yes" todir="${macosx.contents}/Resources">
+    <fileset refid="${macosx.rsrc.files.refid}" />
+  </copy>
+
+  <!-- update documentation in package -->
+  <copy todir="${macosx.app.dir}">
+    <fileset refid="${macosx.doc.files.refid}" />
+  </copy>
+
+  <!-- copy miscellaneous app files into correct places -->
+  <copy todir="${macosx.contents}/MacOS" file="${macosx.app.appfile}" />
+  <chmod perm="ugo+rx" dir="${macosx.contents}/MacOS" includes="**/*" />
+
+  <filter token="app.version" value="${product.version}" />
+  <copy todir="${macosx.contents}" file="${macosx.app.info}" filtering="yes"/>
+  <copy todir="${macosx.contents}" file="${macosx.pkg.info}" />
+</target>
+
+
+<!-- =================================================================
+     ================================================================= -->
+<!-- build unix rule -->
+<!-- arguments:
+       unix.app.dir:          directory for resulting unix app
+       unix.bin.files.refid:  reference to bin files to be added (will be flattened and made executable)
+       unix.doc.files.refid:  reference to doc files to be added (will be flattened)
+       unix.lib.files.refid:  reference to lib files to be added (will be flattened)
+  -->
+<target name="build-unix">
+  <mkdir dir="${unix.app.dir}/bin" />
+  <mkdir dir="${unix.app.dir}/lib" />
+
+  <!-- copy lib files into lib directory -->
+  <copy flatten="yes" todir="${unix.app.dir}/lib">
+    <fileset refid="${unix.lib.files.refid}" />
+  </copy>
+
+  <!-- update documentation in package -->
+  <copy todir="${unix.app.dir}">
+    <fileset refid="${unix.doc.files.refid}" />
+  </copy>
+
+  <!-- copy bin files into bin directory and make executable -->
+  <copy flatten="yes" todir="${unix.app.dir}/bin">
+    <fileset refid="${unix.bin.files.refid}" />
+  </copy>
+ <chmod perm="ugo+rx" dir="${unix.app.dir}/bin" includes="**/*" />
+</target>
+
+
+<!-- =================================================================
+     ================================================================= -->
+<!-- build windows rule -->
+<!-- arguments:
+       win.app.dir:          directory for resulting windows app
+       win.doc.files.refid:  reference to doc files to be added (will be flattened)
+       win.lib.files.refid:  reference to lib files to be added (will be flattened)
+       win.app.binfile:      executable file for app
+       win.app.icon:         icon file for app
+  -->
+<target name="build-windows">
+  <mkdir dir="${win.app.dir}/lib" />
+
+  <!-- copy lib files into lib directory -->
+  <copy flatten="yes" todir="${win.app.dir}/lib">
+    <fileset refid="${win.lib.files.refid}" />
+  </copy>
+
+  <!-- update documentation in package -->
+  <copy todir="${win.app.dir}">
+    <fileset refid="${win.doc.files.refid}" />
+  </copy>
+  <fixcrlf srcdir="${win.app.dir}" eol="crlf" eof="remove" includes="*.txt" />
+
+  <!-- copy app files into app directory -->
+  <copy todir="${win.app.dir}" file="${win.app.binfile}" />
+  <copy todir="${win.app.dir}" file="${win.app.icon}" />
+</target>

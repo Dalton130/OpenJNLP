@@ -1,0 +1,4 @@
+lib/openjnlp.properties
+edu/stanford/ejalbert/BrowserLauncher*
+org/nanode/app/OpenJNLP*
+org/nanode/app/openjnlp/**

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<project name="OpenJNLP" default="usage" basedir="..">
+  <property file="targets/environment.properties" />
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- display usage information -->
+  <target name="usage">
+    <echo>
+      OpenJNLP project build file
+      ------------------------------------------------------
+      
+      Available targets are:
+        build    --> build apps for all supported platforms
+        clean    --> cleans out the build directory
+        compile  --> compile source to build directory and make jars
+        javadoc  --> generate javadoc in build directory
+        package  --> package for distribution on all supported platforms
+    </echo>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- clean out build -->
+  <target name="clean">
+    <delete dir="${build.dir}" />
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- compile java into jars -->
+  <target name="compile">
+    <antcall target="invoke">
+      <param name="product" value="OpenJNLP" />
+      <param name="target" value="compile" />
+    </antcall>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- generate javadoc -->
+  <target name="javadoc">
+    <antcall target="invoke">
+      <param name="product" value="OpenJNLP" />
+      <param name="target" value="javadoc" />
+    </antcall>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <target name="build" depends="compile">
+    <antcall target="invoke">
+      <param name="product" value="OpenJNLP" />
+      <param name="target" value="build" />
+    </antcall>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <target name="package" depends="build">
+    <antcall target="invoke">
+      <param name="product" value="OpenJNLP" />
+      <param name="target" value="package" />
+    </antcall>
+  </target>
+
+
+  <!-- =================================================================
+       ================================================================= -->
+  <!-- invoke target for specified component -->
+  <target name="invoke">
+    <echo message="Invoking ${product} ${target}" />
+    <ant antfile="${target.dir}/${product}/build.xml" target="${target}" />
+  </target>
+</project>
